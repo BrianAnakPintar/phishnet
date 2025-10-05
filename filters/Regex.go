@@ -21,13 +21,13 @@ func (f *RegexFilter) Configure(config map[string]string) error {
 // Run the filter on the provided URL
 // If one of the expressions match. We return UNSAFE.
 func (f *RegexFilter) Run(url string) (FilterResult, error) {
-	res := FilterResult{Proceed: true, Reason: fmt.Sprintf("[%s] No regex matches", FilterName)}
+	res := FilterResult{Proceed: true, Reason: fmt.Sprintf("[%s] No regex matches", RegexFilterName)}
 	for _, expr := range f.expressions {
 		match := expr.MatchString(url)
 		if match {
 			return FilterResult{
 				Proceed: false,
-				Reason:  fmt.Sprintf("[%s] URL: %s matched with pattern: %s\n", FilterName, url, expr),
+				Reason:  fmt.Sprintf("[%s] URL: %s matched with pattern: %s\n", RegexFilterName, url, expr),
 			}, nil
 		}
 	}
@@ -39,5 +39,5 @@ func NewRegexFilter() Filter {
 }
 
 func init() {
-	RegisterFilter(FilterName, NewRegexFilter)
+	RegisterFilter(RegexFilterName, NewRegexFilter)
 }
