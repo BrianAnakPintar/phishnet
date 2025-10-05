@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "PhishNet GuardWhale",
+  "version": "0.1",
+  "description": "Checks visited pages with the local PhishNet server and shows a warning if the site is blocked.",
+  "permissions": ["scripting", "tabs", "activeTab"],
+  "host_permissions": [
+    "http://localhost:8080/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["warning.html", "warning.css", "warning.js", "icon48.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.png"
+  }
+}

@@ -68,6 +68,7 @@ func StartHTTPServer(port int) error {
 		}
 
 		pass, reason, err := ScanURL(raw)
+		fmt.Println("Scanned URL:", raw, "Allowed:", pass, "Reason:", reason)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(map[string]string{"error": reason})

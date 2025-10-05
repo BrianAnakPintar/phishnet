@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GuardWhale Warning</title>
+  <link rel="stylesheet" href="warning.css">
+</head>
+<body>
+  <div class="container">
+    <img src="nonono.gif" class="logo" alt="GuardWhale">
+    <h1>Warning: Unsafe Site</h1>
+    <!-- Collapsible reason log: hidden by default until the user expands -->
+    <details id="reasonDetails" class="reason-details">
+      <summary>Show filter logs</summary>
+      <pre id="reasonLog" class="log">No details provided.</pre>
+    </details>
+    <p id="orig">Original URL: <span></span></p>
+
+    <div class="actions">
+      <button id="goBack">Go back</button>
+      <button id="continue">Continue anyway</button>
+    </div>
+
+    <p class="note">If you continue, you'll be redirected to the original page. Proceed only if you understand the risks.</p>
+  </div>
+  <script src="warning.js"></script>
+</body>
+</html>
