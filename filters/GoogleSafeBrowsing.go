@@ -13,7 +13,11 @@ type GoogleSafeBrowsingFilter struct {
 }
 
 func (f *GoogleSafeBrowsingFilter) Configure(config map[string]string) error {
-	f.API_KEY = config["API_KEY"]
+	key, ok := config["API_KEY"]
+	if !ok {
+		return fmt.Errorf("GoogleSafeBrowsing filter requires an API_KEY configuration")
+	}
+	f.API_KEY = key
 	return nil
 }
 

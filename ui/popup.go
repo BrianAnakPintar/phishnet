@@ -7,12 +7,12 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
+	"github.com/briananakpintar/phishnet/syscalls"
 )
 
-func Popup(logs string) {
+func Popup(logs string, url string) {
 	a := app.New()
 	a.Settings().SetTheme(CartoonTheme{})
 	w := a.NewWindow("PhishNet Alert")
@@ -37,10 +37,11 @@ func Popup(logs string) {
 
 	// Buttons
 	cancel := widget.NewButton("Cancel", func() {
-		dialog.ShowInformation("Hello", "Hello World!", w)
+		w.Close()
 	})
 	continueBtn := widget.NewButton("Continue Anyway", func() {
-		dialog.ShowInformation("Hello", "Hello World!", w)
+		syscalls.OpenChrome(url)
+		w.Close()
 	})
 	buttons := container.NewHBox(layout.NewSpacer(), cancel, continueBtn)
 

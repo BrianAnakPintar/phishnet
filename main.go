@@ -3,28 +3,12 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/exec"
-	"runtime"
 
 	_ "github.com/briananakpintar/phishnet/filters"
 	fishnet "github.com/briananakpintar/phishnet/fishnet"
+	"github.com/briananakpintar/phishnet/syscalls"
 	"github.com/briananakpintar/phishnet/ui"
 )
-
-func openChrome(url string) error {
-	var cmd *exec.Cmd
-
-	switch runtime.GOOS {
-	case "darwin":
-		cmd = exec.Command("open", "-a", "Google Chrome", url)
-	case "windows":
-		cmd = exec.Command("rundll32", "url.dll,FileProtocolHandler", url)
-	default:
-		cmd = exec.Command("google-chrome", url)
-	}
-
-	return cmd.Start()
-}
 
 func usage() {
 	fmt.Println("Usage: phishnet <url>")
@@ -50,9 +34,9 @@ func main() {
 
 	if !pass {
 		fmt.Printf("Denied entry to site: %s\n%s\n", raw, reason)
-		ui.Popup(reason)
+		ui.Popup(reason, raw)
 		return
 	}
 
-	openChrome(raw)
+	syscalls.OpenChrome(raw)
 }

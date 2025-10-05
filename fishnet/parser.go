@@ -117,7 +117,7 @@ func ParseFile(path string) ([]FilterSpec, error) {
 // If path is empty, it will attempt to use "fishnet/bootstrap.fn" in the current working directory.
 func ParseIntoChain(c *FilterChain, path string) error {
 	if path == "" {
-		path = "fishnet/bootstrap.fn"
+		path = "/home/brian/Documents/PersonalProjects/LocalGuardWhale/fishnet/bootstrap.fn"
 	}
 	specs, err := ParseFile(path)
 	if err != nil {
