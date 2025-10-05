@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"regexp"
 	"runtime"
 
+	_ "github.com/briananakpintar/phishnet/filters"
 	fishnet "github.com/briananakpintar/phishnet/fishnet"
 	"github.com/briananakpintar/phishnet/ui"
 )
@@ -37,11 +37,11 @@ func main() {
 	}
 	raw := os.Args[1]
 	filterChain := fishnet.NewFilterChain()
-	customParams := make(map[string]string)
-	customParams["RickRoll"] = regexp.QuoteMeta(raw)
 
-	filterChain.Add("PhishTank", nil)
-	filterChain.Add("Regex", customParams)
+	// Populate the chain from the DSL file (defaults to fishnet/bootstrap.fn)
+	if err := fishnet.ParseIntoChain(filterChain, ""); err != nil {
+		fmt.Printf("Failed to parse filters from DSL: %v\n", err)
+	}
 
 	pass, reason, err := filterChain.Run(raw)
 	if err != nil {

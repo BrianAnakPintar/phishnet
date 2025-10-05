@@ -16,7 +16,7 @@ func Popup(logs string) {
 	a := app.New()
 	a.Settings().SetTheme(CartoonTheme{})
 	w := a.NewWindow("PhishNet Alert")
-	w.Resize(fyne.NewSize(320, 200))
+	w.Resize(fyne.NewSize(320, 125))
 	w.SetFixedSize(true)
 
 	// Cartoonish left side: colored circle with emoji
@@ -33,7 +33,7 @@ func Popup(logs string) {
 	// Allow horizontal scrolling by disabling wrapping
 	logEntry.Wrapping = fyne.TextWrapOff
 	scroll := container.NewScroll(logEntry)
-	scroll.SetMinSize(fyne.NewSize(200, 100))
+	scroll.SetMinSize(fyne.NewSize(200, 80))
 
 	// Buttons
 	cancel := widget.NewButton("Cancel", func() {

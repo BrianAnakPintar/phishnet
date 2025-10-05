@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-var FilterName string = "RegexFilter"
+const RegexFilterName string = "RegexFilter"
 
 type RegexFilter struct {
 	expressions []*regexp.Regexp
@@ -39,5 +39,5 @@ func NewRegexFilter() Filter {
 }
 
 func init() {
-	RegisterFilter("Regex", NewRegexFilter)
+	RegisterFilter(FilterName, NewRegexFilter)
 }

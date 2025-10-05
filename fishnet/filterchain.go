@@ -48,7 +48,7 @@ func (c *FilterChain) Run(url string) (allowed bool, reason string, err error) {
 		}
 
 		if res.Proceed {
-			logs = append(logs, fmt.Sprintf("[%s] PASS\n", fc.name))
+			logs = append(logs, fmt.Sprintf("[%s] PASS", fc.name))
 		} else {
 			// record the blocking filter and return the whole stack
 			logs = append(logs, fmt.Sprintf("[%s] FAIL\n%s", fc.name, res.Reason))

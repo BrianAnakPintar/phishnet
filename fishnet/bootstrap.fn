@@ -1,0 +1,14 @@
+// PhishNet Bootstrap filters
+
+PhishTankFilter:[
+    // This adds custom URLs you want blocked in addition to 
+    // The URLs found in PhishTank
+    http://malicious.example/
+    https://phish.example/login
+    http://example.com/rickroll
+    https://badactor.test/steal
+]
+
+RegexFilter:[
+    RickRoll = youtube
+]
