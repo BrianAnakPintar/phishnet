@@ -119,8 +119,35 @@ func makeRoundedCorners(path string, radius int) (image.Image, error) {
 
 func Popup(logs string, url string) {
 	a := app.New()
+	// Try to load icon.png from common locations and set it as the app/window icon.
+	var iconRes fyne.Resource
+	candidates := []string{}
+	// prefer executable-dir first
+	if ex, err := os.Executable(); err == nil {
+		exDir := filepath.Dir(ex)
+		candidates = append(candidates, filepath.Join(exDir, "icon.png"))
+	}
+	// also check current working directory (useful when running from project root)
+	if wd, err := os.Getwd(); err == nil {
+		candidates = append(candidates, filepath.Join(wd, "icon.png"))
+	}
+	// fallback relative paths
+	candidates = append(candidates, "./icon.png", "icon.png", filepath.Join("..", "icon.png"))
+	for _, p := range candidates {
+		if _, err := os.Stat(p); err == nil {
+			if res, err := fyne.LoadResourceFromPath(p); err == nil {
+				a.SetIcon(res)
+				iconRes = res
+				break
+			}
+		}
+	}
+
 	a.Settings().SetTheme(NordTheme{})
 	w := a.NewWindow("PhishNet Warning")
+	if iconRes != nil {
+		w.SetIcon(iconRes)
+	}
 	w.Resize(fyne.NewSize(360, 140))
 	w.SetFixedSize(true)
 

@@ -2,7 +2,7 @@
 ;; Filters go on a chain from top to bottom
 
 RegexFilter:[
-    RickRoll = youtube
+    RickRoll = watch\?v=dQw4w9WgXcQ
 ]
 
 ;; The PhishTankFilter checks PhishTank's database for phishes AND also
