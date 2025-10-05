@@ -41,8 +41,8 @@ func ParseFile(path string) ([]FilterSpec, error) {
 
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		// strip inline comments (//)
-		if idx := strings.Index(line, "//"); idx >= 0 {
+		// strip inline comments (;;)
+		if idx := strings.Index(line, ";;"); idx >= 0 {
 			line = strings.TrimSpace(line[:idx])
 		}
 		if line == "" {

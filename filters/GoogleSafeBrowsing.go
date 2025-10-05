@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+const GSBFilterName string = "GoogleSafeBrowsingFilter"
+
 type GoogleSafeBrowsingFilter struct {
 	API_KEY string
 }
@@ -15,7 +17,7 @@ type GoogleSafeBrowsingFilter struct {
 func (f *GoogleSafeBrowsingFilter) Configure(config map[string]string) error {
 	key, ok := config["API_KEY"]
 	if !ok {
-		return fmt.Errorf("GoogleSafeBrowsing filter requires an API_KEY configuration")
+		return fmt.Errorf("%s filter requires an API_KEY configuration", GSBFilterName)
 	}
 	f.API_KEY = key
 	return nil
@@ -25,7 +27,7 @@ func (f *GoogleSafeBrowsingFilter) Configure(config map[string]string) error {
 func (f *GoogleSafeBrowsingFilter) Run(url string) (FilterResult, error) {
 	// If no API key configured, skip this filter (allow)
 	if f.API_KEY == "" {
-		return FilterResult{Proceed: true, Reason: "[GoogleSafeBrowsing] No API key configured, skipping"}, nil
+		return FilterResult{Proceed: true, Reason: fmt.Sprintf("[%s] No API key configured, skipping", GSBFilterName)}, nil
 	}
 
 	// Build request body according to GSB v4 API
@@ -72,12 +74,12 @@ func (f *GoogleSafeBrowsingFilter) Run(url string) (FilterResult, error) {
 	}
 
 	if len(parsed.Matches) == 0 {
-		return FilterResult{Proceed: true, Reason: "[GoogleSafeBrowsing] No threats found"}, nil
+		return FilterResult{Proceed: true, Reason: fmt.Sprintf("[%s] No threats found", GSBFilterName)}, nil
 	}
 
 	// Build a concise reason from the first match
 	first := parsed.Matches[0]
-	reason := fmt.Sprintf("[GoogleSafeBrowsing] Threat detected: %v", first)
+	reason := fmt.Sprintf("[%s] Threat detected: %v", GSBFilterName, first)
 	return FilterResult{Proceed: false, Reason: reason}, nil
 }
 
@@ -86,5 +88,5 @@ func NewGSBFilter() Filter {
 }
 
 func init() {
-	RegisterFilter("GoogleSafeBrowsing", NewGSBFilter)
+	RegisterFilter(GSBFilterName, NewGSBFilter)
 }

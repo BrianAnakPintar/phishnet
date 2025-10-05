@@ -20,6 +20,13 @@ func main() {
 		return
 	}
 	raw := os.Args[1]
+	normalized, err := syscalls.NormalizeRawURL(raw)
+	if err != nil {
+		fmt.Printf("Invalid URL: %v\n", err)
+		return
+	}
+	// Use the normalized URL for filtering and opening
+	raw = normalized
 	filterChain := fishnet.NewFilterChain()
 
 	// Populate the chain from the DSL file (defaults to fishnet/bootstrap.fn)
